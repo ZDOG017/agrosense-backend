@@ -1,5 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from sqlalchemy.exc import IntegrityError
 
 from app.config import get_settings
 from app.database import Base, engine
@@ -38,6 +40,14 @@ app.add_middleware(
 @app.on_event("startup")
 def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
+
+
+@app.exception_handler(IntegrityError)
+async def integrity_error_handler(_: Request, exc: IntegrityError) -> JSONResponse:
+    return JSONResponse(
+        status_code=400,
+        content={"detail": f"Database constraint error: {exc.orig}"},
+    )
 
 
 @app.get("/health")
