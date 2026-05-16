@@ -1,5 +1,7 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
+from app.config import get_settings
 from app.database import Base, engine
 from app.models import crop, field, harvest, irrigation, role, sensor, sensor_reading, task, treatment, user  # noqa: F401
 from app.routes.auth_routes import router as auth_router
@@ -17,10 +19,19 @@ from app.routes.treatment_routes import router as treatment_router
 from app.routes.user_routes import router as user_router
 
 
+settings = get_settings()
 app = FastAPI(
     title="AgroSense Smart Farming API",
     description="Backend API for the AgroSense Smart Farming Database Management System.",
     version="1.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
