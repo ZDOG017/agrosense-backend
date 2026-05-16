@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 
+from app.database import Base, engine
+from app.models import crop, field, harvest, irrigation, role, sensor, sensor_reading, task, treatment, user  # noqa: F401
 from app.routes.auth_routes import router as auth_router
 from app.routes.crop_routes import router as crop_router
+from app.routes.dashboard_routes import router as dashboard_router
 from app.routes.field_routes import router as field_router
 from app.routes.harvest_routes import router as harvest_router
 from app.routes.irrigation_routes import router as irrigation_router
+from app.routes.report_routes import router as report_router
 from app.routes.role_routes import router as role_router
 from app.routes.sensor_reading_routes import router as sensor_reading_router
 from app.routes.sensor_routes import router as sensor_router
@@ -16,8 +20,13 @@ from app.routes.user_routes import router as user_router
 app = FastAPI(
     title="AgroSense Smart Farming API",
     description="Backend API for the AgroSense Smart Farming Database Management System.",
-    version="0.11.0",
+    version="1.0.0",
 )
+
+
+@app.on_event("startup")
+def on_startup() -> None:
+    Base.metadata.create_all(bind=engine)
 
 
 @app.get("/health")
@@ -36,3 +45,5 @@ app.include_router(irrigation_router)
 app.include_router(task_router)
 app.include_router(treatment_router)
 app.include_router(harvest_router)
+app.include_router(dashboard_router)
+app.include_router(report_router)
