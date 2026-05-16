@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, ValidationError
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -27,4 +27,18 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings()
+    try:
+        return Settings()
+    except ValidationError as exc:
+        missing_fields = []
+        for error in exc.errors():
+            location = error.get("loc", ())
+            if location:
+                missing_fields.append(str(location[0]))
+
+        details = ", ".join(missing_fields) if missing_fields else "DATABASE_URL, SECRET_KEY"
+        raise RuntimeError(
+            "Missing required environment variables for AgroSense. "
+            "Create a .env file in the project root based on .env.example and set: "
+            f"{details}."
+        ) from exc
