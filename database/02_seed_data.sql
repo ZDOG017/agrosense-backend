@@ -66,7 +66,7 @@ INSERT INTO irrigation_schedules (
 (2, '2026-05-17 06:00:00', 30, 1250.00, 'Manual', 'Scheduled', 2),
 (3, '2026-05-15 17:30:00', 25, 900.00, 'Automatic', 'Completed', 2),
 (4, '2026-05-14 05:45:00', 35, 1500.00, 'Manual', 'Completed', 1),
-(5, '2026-05-18 06:30:00', 20, 700.00, 'Scheduled', 'Scheduled', 2);
+(5, '2026-05-18 06:30:00', 20, 700.00, 'Manual', 'Scheduled', 2);
 
 INSERT INTO tasks (
     assigned_to, field_id, task_title, description, priority, status, due_date
