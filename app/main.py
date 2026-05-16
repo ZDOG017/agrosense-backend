@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.routes.auth_routes import router as auth_router
 from app.routes.crop_routes import router as crop_router
 from app.routes.field_routes import router as field_router
+from app.routes.irrigation_routes import router as irrigation_router
 from app.routes.role_routes import router as role_router
 from app.routes.sensor_reading_routes import router as sensor_reading_router
 from app.routes.sensor_routes import router as sensor_router
@@ -12,7 +13,7 @@ from app.routes.user_routes import router as user_router
 app = FastAPI(
     title="AgroSense Smart Farming API",
     description="Backend API for the AgroSense Smart Farming Database Management System.",
-    version="0.8.0",
+    version="0.9.0",
 )
 
 
@@ -28,3 +29,4 @@ app.include_router(field_router)
 app.include_router(crop_router)
 app.include_router(sensor_router)
 app.include_router(sensor_reading_router)
+app.include_router(irrigation_router)
