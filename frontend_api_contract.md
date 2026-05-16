@@ -3,12 +3,12 @@
 ## 1. Backend Base URL
 
 - Local: `http://127.0.0.1:8000`
-- Production placeholder: `https://your-agrosense-backend.onrender.com`
+- Production placeholder: `https://agrosense-backend-0eqo.onrender.com`
 
 ## 2. Swagger Docs URL
 
 - Local Swagger: `http://127.0.0.1:8000/docs`
-- Production Swagger: `https://your-agrosense-backend.onrender.com/docs`
+- Production Swagger: `https://agrosense-backend-0eqo.onrender.com/docs`
 
 ## 3. Suggested Frontend Pages
 
